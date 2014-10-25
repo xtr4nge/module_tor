@@ -1,6 +1,6 @@
 <? 
 /*
-    Copyright (C) 2013-2014  xtr4nge [_AT_] gmail.com
+    Copyright (C) 2013-2014 xtr4nge [_AT_] gmail.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ include "includes/options_config.php";
 
 ?>
 
-<div class="rounded-top" align="left"> &nbsp; <b>Responder</b> </div>
+<div class="rounded-top" align="left"> &nbsp; <?=$mod_alias?> </div>
 <div class="rounded-bottom">
 
     &nbsp;&nbsp;version <?=$mod_version?><br>
