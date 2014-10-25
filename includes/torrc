@@ -1,0 +1,8 @@
+
+Log notice file /usr/share/FruityWifi/logs/tor.log
+VirtualAddrNetworkIPv4 10.192.0.0/10
+AutomapHostsOnResolve 1
+TransPort 9040
+TransListenAddress 10.0.0.1
+DNSPort 9053
+DNSListenAddress 10.0.0.1
