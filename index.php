@@ -44,8 +44,8 @@ $(function() {
 
 <?
 
-include "_info_.php";
 include "../../config/config.php";
+include "_info_.php";
 include "../../login_check.php";
 include "../../functions.php";
 
@@ -66,7 +66,8 @@ $service = $_POST["service"];
 // DELETE LOG
 if ($logfile != "" and $action == "delete") {
     $exec = "$bin_rm ".$mod_logs_history.$logfile.".log";
-    exec("$bin_danger \"$exec\"", $dump);
+    //exec("$bin_danger \"$exec\"", $dump); //DEPRECATED
+    exec_fruitywifi($exec);
 }
 
 include "includes/options_config.php";

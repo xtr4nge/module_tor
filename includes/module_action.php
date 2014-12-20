@@ -18,9 +18,9 @@
 ?>
 <?
 //include "../login_check.php";
+include "../../../config/config.php";
 include "../_info_.php";
-include "/usr/share/FruityWifi/www/config/config.php";
-include "/usr/share/FruityWifi/www/functions.php";
+include "../../../functions.php";
 
 include "options_config.php";
 
@@ -47,18 +47,22 @@ if($service != "") {
     if ($action == "start") {
         
         $exec = "$bin_sed -i 's/TransListenAddress .*/TransListenAddress $io_in_ip/g' torrc";
-        exec("$bin_danger \"" . $exec . "\"", $output);
+        //exec("$bin_danger \"" . $exec . "\"", $output); //DEPRECATED
+        $output = exec_fruitywifi($exec);
         
         $exec = "$bin_sed -i 's/DNSListenAddress .*/DNSListenAddress $io_in_ip/g' torrc";
-        exec("$bin_danger \"" . $exec . "\"", $output);
+        //exec("$bin_danger \"" . $exec . "\"", $output); //DEPRECATED
+        $output = exec_fruitywifi($exec);
         
         // COPY LOG
         if ( 0 < filesize( $mod_logs ) ) {
             $exec = "$bin_cp $mod_logs $mod_logs_history/".gmdate("Ymd-H-i-s").".log";
-            exec("$bin_danger \"$exec\"" );
+            //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+            exec_fruitywifi($exec);
             
             $exec = "$bin_echo '' > $mod_logs";
-            exec("$bin_danger \"$exec\"" );
+            //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+            exec_fruitywifi($exec);
         }
     
         // ADD selected options
@@ -74,45 +78,54 @@ if($service != "") {
         $ifRouteOn = exec($exec);
         if ($ifRouteOn == "") {
             $exec = "$bin_route add default gw $io_in_ip";
-            exec("$bin_danger \"$exec\"" );
+            //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+            exec_fruitywifi($exec);
         }
 
 
         $exec = "/etc/init.d/tor restart";
         //$exec = "$bin_tor --defaults-torrc /usr/share/FruityWifi/www/modules/tor/includes/torrc >/dev/null &";
-        $exec = "$bin_tor -f /usr/share/FruityWifi/www/modules/tor/includes/torrc >/dev/null &";
-        exec("$bin_danger \"$exec\"" );
+        $exec = "$bin_tor -f $mod_path/includes/torrc >/dev/null &";
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
 
         //---------------------------------
         $exec = "$bin_iptables -t nat -A PREROUTING -i $io_in_iface -p udp --dport 53 -j REDIRECT --to-ports 9053";
-        exec("$bin_danger \"$exec\"" );
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
 
         $exec = "$bin_iptables -t nat -A PREROUTING -i $io_in_iface -p tcp --syn -j REDIRECT --to-ports $_trans_port";
         //$exec = "$bin_iptables -t nat -A PREROUTING -i $io_in_iface ! -d $io_in_ip  -p tcp ! --dport 53 --syn -j REDIRECT --to-ports $_trans_port";
-        exec("$bin_danger \"$exec\"" );
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
         //---------------------------------
         
     } else if($action == "stop") {
         // STOP MODULE
         $exec = "$bin_killall $mod_name";
-        exec("$bin_danger \"$exec\"" );
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
         
         //------------------------------------
         $exec = "$bin_iptables -t nat -D PREROUTING -i $io_in_iface -p udp --dport 53 -j REDIRECT --to-ports 9053";
-        exec("$bin_danger \"$exec\"" );
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
 
         $exec = "$bin_iptables -t nat -D PREROUTING -i $io_in_iface -p tcp --syn -j REDIRECT --to-ports $_trans_port";
         //$exec = "$bin_iptables -t nat -D PREROUTING -i $io_in_iface ! -d $io_in_ip  -p tcp ! --dport 53 --syn -j REDIRECT --to-ports $_trans_port";
-        exec("$bin_danger \"$exec\"" );
+        //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+        exec_fruitywifi($exec);
         //------------------------------------
         
         // COPY LOG
         if ( 0 < filesize( $mod_logs ) ) {
             $exec = "$bin_cp $mod_logs $mod_logs_history/".gmdate("Ymd-H-i-s").".log";
-            exec("$bin_danger \"$exec\"" );
+            //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+            exec_fruitywifi($exec);
             
             $exec = "$bin_echo '' > $mod_logs";
-            exec("$bin_danger \"$exec\"" );
+            //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+            exec_fruitywifi($exec);
         }
 
     }
@@ -122,10 +135,12 @@ if($service != "") {
 if ($install == "install_$mod_name") {
 
     $exec = "chmod 755 install.sh";
-    exec("$bin_danger \"$exec\"" );
+    //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+    exec_fruitywifi($exec);
 
-    $exec = "$bin_sudo ./install.sh > /usr/share/FruityWifi/logs/install.txt &";
-    exec("$bin_danger \"$exec\"" );
+    $exec = "$bin_sudo ./install.sh > $log_path/install.txt &";
+    //exec("$bin_danger \"$exec\"" ); //DEPRECATED
+    exec_fruitywifi($exec);
 
     header('Location: ../../install.php?module='.$mod_name);
     exit;
