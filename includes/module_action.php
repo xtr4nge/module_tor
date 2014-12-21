@@ -82,6 +82,8 @@ if($service != "") {
             exec_fruitywifi($exec);
         }
 
+        $exec = "/etc/init.d/ntp restart";
+        exec_fruitywifi($exec);
 
         $exec = "/etc/init.d/tor restart";
         //$exec = "$bin_tor --defaults-torrc /usr/share/FruityWifi/www/modules/tor/includes/torrc >/dev/null &";
