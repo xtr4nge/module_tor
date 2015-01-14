@@ -82,7 +82,7 @@ include "includes/options_config.php";
     if (file_exists($bin_tor)) { 
         echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$mod_alias <font style='color:lime'>installed</font><br>";
     } else {
-        echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$mod_alias <a href='includes/module_action.php?install=install_responder' style='color:red'>install</a><br>";
+        echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$mod_alias <a href='includes/module_action.php?install=install_tor' style='color:red'>install</a><br>";
     } 
     ?>
     
